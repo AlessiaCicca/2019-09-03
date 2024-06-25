@@ -8,10 +8,30 @@ class Controller:
         # the model, which implements the logic of the program and holds the data
         self._model = model
 
-    def handle_hello(self, e):
-        name = self._view.txt_name.value
-        if name is None or name == "":
-            self._view.create_alert("Inserire il nome")
+    def handle_analisi(self, e):
+        calorie = self._view.txt_calorie.value
+        if calorie is None:
+            self._view.create_alert("Inserire un valore numerico per le calorie")
             return
-        self._view.txt_result.controls.append(ft.Text(f"Hello, {name}!"))
+        grafo = self._model.creaGrafo( int(calorie))
+        self._view.txt_result.controls.append(ft.Text("Grafo correttamente creato."))
+        self._view.txt_result.controls.append(ft.Text(f"Il grafo contiene "
+                                                      f"{self._model.getNumNodes()} nodi."))
+        self._view.txt_result.controls.append(ft.Text(f"Il grafo contiene "
+                                                      f"{self._model.getNumEdges()} archi."))
+        for nodo in grafo.nodes():
+            self._view.dd_tipo.options.append(ft.dropdown.Option(
+                text=nodo))
         self._view.update_page()
+
+
+    def handle_correlate(self, e):
+        tipo = self._view.dd_tipo.value
+        if tipo is None:
+            self._view.create_alert("Selezionare un tipo")
+            return
+        analisi=self._model.getAnalisi(tipo)
+        for (nodo,peso) in analisi:
+            self._view.txt_result.controls.append(ft.Text(f"{nodo} con peso={peso}"))
+        self._view.update_page()
+

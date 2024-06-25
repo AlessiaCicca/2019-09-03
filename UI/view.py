@@ -8,7 +8,7 @@ class View(ft.UserControl):
         self._page = page
         self._page.title = "Template application using MVC and DAO"
         self._page.horizontal_alignment = 'CENTER'
-        self._page.theme_mode = ft.ThemeMode.DARK
+        self._page.theme_mode = ft.ThemeMode.LIGHT
         # controller (it is not initialized. Must be initialized in the main, after the controller is created)
         self._controller = None
         # graphical elements
@@ -20,20 +20,27 @@ class View(ft.UserControl):
 
     def load_interface(self):
         # title
-        self._title = ft.Text("Hello World", color="blue", size=24)
+        self._title = ft.Text("03/09/2019", color="blue", size=24)
         self._page.controls.append(self._title)
 
         #ROW with some controls
         # text field for the name
-        self.txt_name = ft.TextField(
-            label="name",
+        self.txt_calorie = ft.TextField(
+            label="Calorie",
             width=200,
-            hint_text="Insert a your name"
+
+        )
+        self.dd_tipo=ft.Dropdown(label="Tipo di Porzione")
+        self.txt_passi= ft.TextField(
+            label="Passi",
+            width=200,
+
         )
 
         # button for the "hello" reply
-        self.btn_hello = ft.ElevatedButton(text="Hello", on_click=self._controller.handle_hello)
-        row1 = ft.Row([self.txt_name, self.btn_hello],
+        self.btn_analisi = ft.ElevatedButton(text="Analisi", on_click=self._controller.handle_analisi)
+        self.btn_correlate= ft.ElevatedButton(text="Correlate", on_click=self._controller.handle_correlate)
+        row1 = ft.Row([self.txt_calorie,self.dd_tipo, self.btn_analisi, self.btn_correlate],
                       alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
 
