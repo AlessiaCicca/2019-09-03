@@ -1,3 +1,5 @@
+import copy
+
 import networkx as nx
 
 from database.DAO import DAO
@@ -37,5 +39,30 @@ class Model:
             analisi.append((vicini,self.grafo[vicini][tipo]["weight"]))
         return analisi
 
+    def getBestPath(self, nodoIniziale, limite):
+        self._soluzione = []
+        self._costoMigliore = 0
+        parziale = [nodoIniziale]
+        self._ricorsione(parziale, limite)
+        return self._costoMigliore, self._soluzione
+
+    def _ricorsione(self, parziale, limite):
+        if len(parziale) == limite:
+            if self.peso(parziale) > self._costoMigliore:
+                self._soluzione = copy.deepcopy(parziale)
+                self._costoMigliore =  self.peso(parziale)
+
+        if len(parziale)<limite:
+            for n in self.grafo.neighbors(parziale[-1]):
+                if n not in parziale:
+                    parziale.append(n)
+                    self._ricorsione(parziale, limite)
+                    parziale.pop()
+
+    def peso(self, listaNodi):
+        pesoTot = 0
+        for i in range(0, len(listaNodi) - 1):
+            pesoTot += self.grafo[listaNodi[i]][listaNodi[i + 1]]["weight"]
+        return pesoTot
 
 

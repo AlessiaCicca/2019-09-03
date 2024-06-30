@@ -35,3 +35,16 @@ class Controller:
             self._view.txt_result.controls.append(ft.Text(f"{nodo} con peso={peso}"))
         self._view.update_page()
 
+    def handle_cerca(self, e):
+        passi = self._view.txt_passi.value
+        if passi == "":
+            self._view.create_alert("Inserire un numero di passi")
+            return
+        tipo = self._view.dd_tipo.value
+        costo, listaNodi = self._model.getBestPath(tipo, int(passi))
+        self._view.txt_result.controls.append(ft.Text(f"La soluzione migliore è costituita da {costo} attori"))
+        for nodo in listaNodi:
+            self._view.txt_result.controls.append(ft.Text(f"{nodo}"))
+        self._view.update_page()
+
+

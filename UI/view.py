@@ -39,10 +39,14 @@ class View(ft.UserControl):
 
         # button for the "hello" reply
         self.btn_analisi = ft.ElevatedButton(text="Analisi", on_click=self._controller.handle_analisi)
+        self.btn_cammino = ft.ElevatedButton(text="Cammino", on_click=self._controller.handle_cerca)
         self.btn_correlate= ft.ElevatedButton(text="Correlate", on_click=self._controller.handle_correlate)
         row1 = ft.Row([self.txt_calorie,self.dd_tipo, self.btn_analisi, self.btn_correlate],
                       alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
+        row2 = ft.Row([self.txt_passi, self.btn_cammino],
+                      alignment=ft.MainAxisAlignment.CENTER)
+        self._page.controls.append(row2)
 
         # List View where the reply is printed
         self.txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
